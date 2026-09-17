@@ -1,0 +1,1 @@
+rootProject.name = "HireCore_Ejercicio2"
