@@ -30,9 +30,7 @@ public class EtapaFactoryConcreta  implements IEtapaAbstractFactory {
     }
 
     @Override
-    public IEtapaState contratado() {
-        return new EstadoContratado(this);
-    }
+    public IEtapaState contratado() { return new EstadoContratado(this); }
 
     @Override
     public IEtapaState rechazado() {

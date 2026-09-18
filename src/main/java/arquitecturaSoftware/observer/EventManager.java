@@ -10,9 +10,6 @@ import java.util.Map;
 public class EventManager {
     private final Map<String, List<IEventListener>> listeners = new HashMap<>();
 
-    public EventManager() {
-    }
-
     public void subscribe(String evento, IEventListener listener){
         listeners.computeIfAbsent(evento, k -> new ArrayList<>()).add(listener);
 

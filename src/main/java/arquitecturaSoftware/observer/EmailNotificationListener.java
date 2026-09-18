@@ -14,8 +14,4 @@ public class EmailNotificationListener implements IEventListener{
         System.out.println("[EMAIL a " + email + "] " + evento + ": " + ficha.getCandidato().getNombreCompleto()
                 + " -> " + ficha.getEtapa().nombre());
     }
-
-    public void EmailNotificationListener(String email){
-
-    }
 }
