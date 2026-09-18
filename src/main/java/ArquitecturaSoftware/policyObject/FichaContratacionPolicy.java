@@ -1,5 +1,7 @@
 package ArquitecturaSoftware.policyObject;
 
+import ArquitecturaSoftware.model.FichaContratacionModel;
+import ArquitecturaSoftware.observer.EventManager;
 import ArquitecturaSoftware.state.IEtapaState;
 import ArquitecturaSoftware.strategy.IRolStrategy;
 
@@ -24,11 +26,11 @@ public class FichaContratacionPolicy implements PermisosPolicy{
         return false;
     }
 
-    public void avanzarEtapa(FichaContratacion){
+    public void avanzarEtapa(FichaContratacionModel ficha){
 
     }
 
-    public void rechazarCandidato(FichaContratacion){
+    public void rechazarCandidato(FichaContratacionModel ficha){
 
     }
 }
