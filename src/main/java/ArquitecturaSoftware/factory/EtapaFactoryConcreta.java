@@ -2,40 +2,40 @@ package ArquitecturaSoftware.factory;
 
 import ArquitecturaSoftware.state.*;
 
-public class EtapaFactoryConcreta  implements EtapaAbstractFactory{
+public class EtapaFactoryConcreta  implements IEtapaAbstractFactory {
 
     @Override
-    public EtapaState aplicado() {
+    public IEtapaState aplicado() {
         return new EstadoAplicado(this);
     }
 
     @Override
-    public EtapaState entrevista() {
+    public IEtapaState entrevista() {
         return new EstadoEntrevista(this);
     }
 
     @Override
-    public EtapaState pruebaTecnica() {
+    public IEtapaState pruebaTecnica() {
         return new EstadoPruebaTecnica(this);
     }
 
     @Override
-    public EtapaState validacionReferencias() {
+    public IEtapaState validacionReferencias() {
         return new EstadoValidacionReferencias(this);
     }
 
     @Override
-    public EtapaState oferta() {
+    public IEtapaState oferta() {
         return new EstadoOferta(this);
     }
 
     @Override
-    public EtapaState contratado() {
+    public IEtapaState contratado() {
         return new EstadoContratado(this);
     }
 
     @Override
-    public EtapaState rechazado() {
+    public IEtapaState rechazado() {
         return new EstadoRechazado(this);
     }
 }

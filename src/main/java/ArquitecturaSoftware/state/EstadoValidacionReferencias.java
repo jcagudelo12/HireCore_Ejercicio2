@@ -2,7 +2,7 @@ package ArquitecturaSoftware.state;
 import ArquitecturaSoftware.factory.EtapaFactoryConcreta;
 import java.util.Set;
 
-public class EstadoValidacionReferencias implements EtapaState{
+public class EstadoValidacionReferencias implements IEtapaState {
     private final EtapaFactoryConcreta fabrica;
 
     public EstadoValidacionReferencias(EtapaFactoryConcreta fabrica){
@@ -25,12 +25,12 @@ public class EstadoValidacionReferencias implements EtapaState{
     }
 
     @Override
-    public EtapaState avanzar() {
+    public IEtapaState avanzar() {
         return fabrica.oferta();
     }
 
     @Override
-    public EtapaState rechazar() {
+    public IEtapaState rechazar() {
         return fabrica.rechazado();
     }
 }

@@ -2,7 +2,7 @@ package ArquitecturaSoftware.state;
 import ArquitecturaSoftware.factory.EtapaFactoryConcreta;
 import java.util.Set;
 
-public class EstadoContratado implements EtapaState{
+public class EstadoContratado implements IEtapaState {
     private final EtapaFactoryConcreta fabrica;
 
     public EstadoContratado(EtapaFactoryConcreta fabrica){
@@ -25,12 +25,12 @@ public class EstadoContratado implements EtapaState{
     }
 
     @Override
-    public EtapaState avanzar() {
+    public IEtapaState avanzar() {
         return fabrica.contratado();
     }
 
     @Override
-    public EtapaState rechazar() {
+    public IEtapaState rechazar() {
         return fabrica.rechazado();
     }
 }
