@@ -9,7 +9,6 @@ import arquitecturaSoftware.factory.IFichaContratacionPolicyFactory;
 import arquitecturaSoftware.model.CandidatoModel;
 import arquitecturaSoftware.model.EmpleadoModel;
 import arquitecturaSoftware.model.FichaContratacionModel;
-import arquitecturaSoftware.model.HistorialCambiosModel;
 import arquitecturaSoftware.observer.EmailNotificationListener;
 import arquitecturaSoftware.observer.EventManager;
 import arquitecturaSoftware.policyObject.IPermisosPolicy;
@@ -31,7 +30,7 @@ public class Consumer {
         eventos.subscribe("ETAPA_AVANZADA", new EmailNotificationListener("rrhh@hirecore.com"));
         eventos.subscribe("CANDIDATO_RECHAZADO", new EmailNotificationListener("rrhh@hirecore.com"));
 
-        this.controller = new FichaContratacionController(new HistorialCambiosModel(), eventos);
+        this.controller = new FichaContratacionController(eventos);
         this.policyFactory = new FichaContratacionPolicyFactory(empleados, candidatos, eventos);
     }
 
@@ -88,7 +87,7 @@ public class Consumer {
         controller.rechazarEtapa(empleado, ficha);
     }
 
-    public boolean deshacer() {
-        return controller.deshacer();
+    public boolean deshacer(FichaContratacionModel ficha) {
+        return controller.deshacer(ficha);
     }
 }

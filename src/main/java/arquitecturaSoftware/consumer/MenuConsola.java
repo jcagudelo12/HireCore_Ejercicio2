@@ -106,7 +106,8 @@ public class MenuConsola {
     }
 
     private void deshacerUltimo() {
-        IO.println(consumer.deshacer() ? "Último cambio deshecho" : "No hay cambios que deshacer");
+        FichaContratacionModel ficha = seleccionarFicha();
+        IO.println(consumer.deshacer(ficha) ? "Último cambio deshecho" : "No hay cambios que deshacer");
     }
 
     private void consultarPermiso() {
