@@ -1,17 +1,20 @@
 package arquitecturaSoftware.policyObject;
 
+import arquitecturaSoftware.model.EmpleadoModel;
 import arquitecturaSoftware.model.FichaContratacionModel;
 import arquitecturaSoftware.observer.EventManager;
 import arquitecturaSoftware.state.IEtapaState;
 import arquitecturaSoftware.strategy.IRolStrategy;
 
 public class FichaContratacionPolicy implements IPermisosPolicy {
-    private IRolStrategy rol;
+    private final EmpleadoModel actor;
+    private final IRolStrategy rol;
     private IEtapaState etapa;
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
-    public FichaContratacionPolicy(IRolStrategy rol, IEtapaState etapa, EventManager eventManager) {
-        this.rol = rol;
+    public FichaContratacionPolicy(EmpleadoModel actor, IEtapaState etapa, EventManager eventManager) {
+        this.actor = actor;
+        this.rol = actor.getRol();
         this.etapa = etapa;
         this.eventManager = eventManager;
     }
@@ -40,8 +43,9 @@ public class FichaContratacionPolicy implements IPermisosPolicy {
             throw new SecurityException("No se puede modificar la etapa desde '" + etapa.nombre() + "' con este rol.");
         }
 
+        IEtapaState anterior = this.etapa;
         ficha.setEtapa(nueva);
         this.etapa = nueva;
-        eventManager.notifyEvent(evento, ficha);
+        eventManager.notifyEvent(evento, ficha, actor, anterior);
     }
 }

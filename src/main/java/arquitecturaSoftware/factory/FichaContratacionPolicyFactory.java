@@ -27,6 +27,6 @@ public class FichaContratacionPolicyFactory implements IFichaContratacionPolicyF
         if (empleado == null) {
             throw new IllegalArgumentException("Usuario desconocido: " + idUsuario);
         }
-        return new FichaContratacionPolicy(empleado.getRol(), ficha.getEtapa(), eventManager);
+        return new FichaContratacionPolicy(empleado, ficha.getEtapa(), eventManager);
     }
 }

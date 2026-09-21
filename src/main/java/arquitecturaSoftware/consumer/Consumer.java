@@ -12,6 +12,8 @@ import arquitecturaSoftware.model.FichaContratacionModel;
 import arquitecturaSoftware.observer.EmailNotificationListener;
 import arquitecturaSoftware.observer.EventManager;
 import arquitecturaSoftware.policyObject.IPermisosPolicy;
+import arquitecturaSoftware.model.RegistroAuditoriaModel;
+import arquitecturaSoftware.observer.AuditoriaListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +26,14 @@ public class Consumer {
     private final List<FichaContratacionModel> fichas = new ArrayList<>();
     private final FichaContratacionController controller;
     private final IFichaContratacionPolicyFactory policyFactory;
+    private final AuditoriaListener auditoria = new AuditoriaListener();
 
     public Consumer() {
         EventManager eventos = new EventManager();
         eventos.subscribe("ETAPA_AVANZADA", new EmailNotificationListener("rrhh@hirecore.com"));
         eventos.subscribe("CANDIDATO_RECHAZADO", new EmailNotificationListener("rrhh@hirecore.com"));
+        eventos.subscribe("ETAPA_AVANZADA", auditoria);
+        eventos.subscribe("CANDIDATO_RECHAZADO", auditoria);
 
         this.controller = new FichaContratacionController(eventos);
         this.policyFactory = new FichaContratacionPolicyFactory(empleados, candidatos, eventos);
@@ -89,5 +94,9 @@ public class Consumer {
 
     public boolean deshacer(FichaContratacionModel ficha) {
         return controller.deshacer(ficha);
+    }
+
+    public List<RegistroAuditoriaModel> getAuditoria() {
+        return auditoria.getRegistros();
     }
 }

@@ -2,6 +2,7 @@ package arquitecturaSoftware.consumer;
 
 import arquitecturaSoftware.model.EmpleadoModel;
 import arquitecturaSoftware.model.FichaContratacionModel;
+import arquitecturaSoftware.model.RegistroAuditoriaModel;
 import arquitecturaSoftware.policyObject.IPermisosPolicy;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class MenuConsola {
                         case "5" -> deshacerUltimo();
                         case "6" -> consultarPermiso();
                         case "7" -> identificarse();
+                        case "8" -> verAuditoria();
                         case "0" -> salir = true;
                         default -> IO.println("Opción no válida");
                     }
@@ -55,6 +57,7 @@ public class MenuConsola {
         IO.println("5. Deshacer último cambio");
         IO.println("6. Consultar permiso sobre un campo");
         IO.println("7. Cambiar de usuario");
+        IO.println("8. Ver auditoría de cambios");
         IO.println("0. Salir");
     }
 
@@ -141,4 +144,16 @@ public class MenuConsola {
         IO.print(mensaje);
         return scanner.nextLine().trim();
     }
+
+    private void verAuditoria() {
+        List<RegistroAuditoriaModel> registros = consumer.getAuditoria();
+        if (registros.isEmpty()) {
+            IO.println("No hay cambios registrados");
+            return;
+        }
+        for (RegistroAuditoriaModel registro : registros) {
+            IO.println(registro.toString());
+        }
+    }
+
 }

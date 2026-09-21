@@ -1,6 +1,8 @@
 package arquitecturaSoftware.observer;
 
+import arquitecturaSoftware.model.EmpleadoModel;
 import arquitecturaSoftware.model.FichaContratacionModel;
+import arquitecturaSoftware.state.IEtapaState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,19 +14,18 @@ public class EventManager {
 
     public void subscribe(String evento, IEventListener listener){
         listeners.computeIfAbsent(evento, k -> new ArrayList<>()).add(listener);
-
     }
 
     public void unsubscribe(String evento, IEventListener listener){
         List<IEventListener> suscritos = listeners.get(evento);
-        if (!suscritos.isEmpty()){
+        if (suscritos != null && !suscritos.isEmpty()){
             suscritos.remove(listener);
         }
     }
 
-    public void notifyEvent(String evento, FichaContratacionModel ficha ){
+    public void notifyEvent(String evento, FichaContratacionModel ficha, EmpleadoModel actor, IEtapaState etapaAnterior){
         for (IEventListener listener : new ArrayList<>(listeners.getOrDefault(evento, List.of()))){
-            listener.update(evento, ficha);
+            listener.update(evento, ficha, actor, etapaAnterior);
         }
     }
 }
