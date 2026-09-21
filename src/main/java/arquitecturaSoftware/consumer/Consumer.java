@@ -34,6 +34,9 @@ public class Consumer {
         eventos.subscribe("CANDIDATO_RECHAZADO", new EmailNotificationListener("rrhh@hirecore.com"));
         eventos.subscribe("ETAPA_AVANZADA", auditoria);
         eventos.subscribe("CANDIDATO_RECHAZADO", auditoria);
+        eventos.subscribe("ETAPA_AVANZADA", auditoria);
+        eventos.subscribe("CANDIDATO_RECHAZADO", auditoria);
+        eventos.subscribe("CAMBIO_DESHECHO", auditoria);
 
         this.controller = new FichaContratacionController(eventos);
         this.policyFactory = new FichaContratacionPolicyFactory(empleados, candidatos, eventos);
@@ -92,8 +95,8 @@ public class Consumer {
         controller.rechazarEtapa(empleado, ficha);
     }
 
-    public boolean deshacer(FichaContratacionModel ficha) {
-        return controller.deshacer(ficha);
+    public boolean deshacer(EmpleadoModel empleado, FichaContratacionModel ficha) {
+        return controller.deshacer(empleado, ficha);
     }
 
     public List<RegistroAuditoriaModel> getAuditoria() {

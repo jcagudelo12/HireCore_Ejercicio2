@@ -4,6 +4,7 @@ import arquitecturaSoftware.model.EmpleadoModel;
 import arquitecturaSoftware.model.FichaContratacionModel;
 import arquitecturaSoftware.observer.EventManager;
 import arquitecturaSoftware.policyObject.FichaContratacionPolicy;
+import arquitecturaSoftware.state.IEtapaState;
 
 public class FichaContratacionController {
     private final EventManager eventManager;
@@ -22,8 +23,13 @@ public class FichaContratacionController {
         ficha.getHistorial().ejecutar(new RechazarEtapaCommand(policy, ficha));
     }
 
-    public boolean deshacer(FichaContratacionModel ficha) {
-        return ficha.getHistorial().deshacerUltimo();
+    public boolean deshacer(EmpleadoModel empleado, FichaContratacionModel ficha) {
+        IEtapaState etapaAntesDeDeshacer = ficha.getEtapa();
+        boolean deshecho = ficha.getHistorial().deshacerUltimo();
+        if (deshecho) {
+            eventManager.notifyEvent("CAMBIO_DESHECHO", ficha, empleado, etapaAntesDeDeshacer);
+        }
+        return deshecho;
     }
 
     private FichaContratacionPolicy crearPolitica(EmpleadoModel empleado, FichaContratacionModel ficha){
