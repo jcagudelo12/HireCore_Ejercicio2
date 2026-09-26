@@ -89,11 +89,17 @@ public class MenuConsola {
         }
         for (int i = 0; i < fichas.size(); i++) {
             FichaContratacionModel f = fichas.get(i);
-            IO.println((i + 1) + ". " + f.getCandidato().getNombreCompleto()
-                    + " | " + f.getCargo()
-                    + " | Etapa: " + f.getEtapa().nombre()
-                    + " | Reclutador: " + f.getReclutador().getNombreCompleto());
+            IPermisosPolicy politica = consumer.consultarPolitica(f, usuario);
+            // "Nombre" cubre nombre completo: en este proyecto ningún rol lee Apellidos sin leer también Nombre
+            IO.println((i + 1) + ". " + campo(politica, "Nombre", f.getCandidato().getNombreCompleto())
+                    + " | " + campo(politica, "Cargo", f.getCargo())
+                    + " | Etapa: " + campo(politica, "Etapa", f.getEtapa().nombre())
+                    + " | Reclutador: " + campo(politica, "Reclutador", f.getReclutador().getNombreCompleto()));
         }
+    }
+
+    private String campo(IPermisosPolicy politica, String nombreCampo, String valor) {
+        return politica.puedeLeer(nombreCampo) ? valor : "[oculto]";
     }
 
     private void avanzarEtapa() {
@@ -155,4 +161,6 @@ public class MenuConsola {
             IO.println(registro.toString());
         }
     }
+
+
 }

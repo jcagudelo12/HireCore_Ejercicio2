@@ -14,6 +14,7 @@ import arquitecturaSoftware.observer.EventManager;
 import arquitecturaSoftware.policyObject.IPermisosPolicy;
 import arquitecturaSoftware.model.RegistroAuditoriaModel;
 import arquitecturaSoftware.observer.AuditoriaListener;
+import arquitecturaSoftware.policyObject.FichaContratacionPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,12 @@ public class Consumer {
     private final FichaContratacionController controller;
     private final IFichaContratacionPolicyFactory policyFactory;
     private final AuditoriaListener auditoria = new AuditoriaListener();
+    private final EventManager eventos;
 
     public Consumer() {
-        EventManager eventos = new EventManager();
+        this.eventos = new EventManager();
         eventos.subscribe("ETAPA_AVANZADA", new EmailNotificationListener("rrhh@hirecore.com"));
         eventos.subscribe("CANDIDATO_RECHAZADO", new EmailNotificationListener("rrhh@hirecore.com"));
-        eventos.subscribe("ETAPA_AVANZADA", auditoria);
-        eventos.subscribe("CANDIDATO_RECHAZADO", auditoria);
         eventos.subscribe("ETAPA_AVANZADA", auditoria);
         eventos.subscribe("CANDIDATO_RECHAZADO", auditoria);
         eventos.subscribe("CAMBIO_DESHECHO", auditoria);
@@ -74,6 +74,11 @@ public class Consumer {
 
     public IPermisosPolicy consultarPolitica(FichaContratacionModel ficha, String idUsuario) {
         return policyFactory.crearPolitica(ficha, idUsuario);
+    }
+
+    // Para cuando ya tengo el EmpleadoModel identificado en el menú y no quiero volver a buscarlo por id
+    public IPermisosPolicy consultarPolitica(FichaContratacionModel ficha, EmpleadoModel empleado) {
+        return new FichaContratacionPolicy(empleado, ficha.getEtapa(), eventos);
     }
 
     // Operaciones sobre fichas
